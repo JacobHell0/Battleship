@@ -1,0 +1,103 @@
+h1
+{
+    font-family: Monaco;
+    text-align: center;
+    font-size: xxx-large;
+}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+/*NAV BAR*/
+li
+{
+    float: left;
+    border-right:1px solid #bbb;
+}
+
+li:last-child
+{
+    border-right: none;
+}
+
+li a
+{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active)
+{
+    background-color: #ff0000;
+}
+
+
+/*NAV BAR END*/
+
+
+/*PLAYER BUTTON START*/
+.playerbutton
+{
+    padding-top: 15px;
+    text-align: center;
+}
+
+.playeronebutton
+{
+
+}
+
+.playeronebutton:hover
+{
+    background-color: #ff0000;
+
+}
+
+.playertwobutton
+{
+
+}
+
+.playertwobutton:hover
+{
+    background-color: #467eff;
+
+}
+
+/*PLAYER BUTTON END*/
+
+table
+{
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid black; /* Add border to the table */
+}
+
+th, td
+{
+    border: 1px solid black; /* Add border to table cells */
+    padding: 8px;
+    text-align: center;
+}
+
+th
+{
+    background-color: #f2f2f2;
+}
+
+.gamebuttons
+{
+    background-color: #ffffff;
+    text-align: center;
+
+}
+
