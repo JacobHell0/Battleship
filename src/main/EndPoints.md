@@ -78,7 +78,7 @@ This message is expected from player one
 
 ### Messages sent to client
 ```json
-{"ShotResponse": "Hit"}
+{"ShotResponse": "x,y"}
 ```
 ```json
 {"ShotResponse": "Miss"}
@@ -108,7 +108,7 @@ This message is expected from player two
 
 ### Messages sent to client
 ```json
-{"ShotResponse": "Hit"}
+{"ShotResponse": "x,y"}
 ```
 ```json
 {"ShotResponse": "Miss"}

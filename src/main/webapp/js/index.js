@@ -18,8 +18,19 @@ function playerJoin() {
                 //move to position ships
                 //TODO be able to place ships
 
-
                 break;
+            case "StartGameFirst":
+                generateTable();
+                break;
+
+            case "StartGameSecond":
+                generateTable();
+                break;
+
+            case "ShotResponse":
+                changeButtonColour(message.data);
+                break;
+
 
             default: //just log the message, never called
                 console.log("type: " + message.type + ", msg: " + message.message);
@@ -28,23 +39,52 @@ function playerJoin() {
     }
 }
 
-function sendShipData() {
-    let shipData = "{\"ship\": \n" +
-        "    {\n" +
-        "    \"0\": \"9,0,9,4\",\n" +
-        "    \"1\": \"0,0,3,0\",\n" +
-        "    \"2\": \"0,9,2,9\",\n" +
-        "    \"3\": \"9,7,9,9\",\n" +
-        "    \"4\": \"3,4,4,4\"\n" +
-        "    }\n" +
-        "}";
+function changeButtonColour(shotData) {
+
+    if(!shotData.equals("Miss")) {
+        let split = shotData.split(",");
+        let x = split[0];
+        let y = split[1];
+        let id = 'Button[' + x + ',' + y + ']';
+        document.getElementById(id).style.background = "red";
+    }
+}
+
+function sendShipData(template) {
+
+    let shipData;
+    //template ranges from 0-5, corresponding to the layouts
+    switch (template) {
+        case 0: //4 corners
+            shipData = "{\"ship\": \n" +
+                "    {\n" +
+                "    \"0\": \"9,0,9,4\",\n" +
+                "    \"1\": \"0,0,3,0\",\n" +
+                "    \"2\": \"0,9,2,9\",\n" +
+                "    \"3\": \"9,7,9,9\",\n" +
+                "    \"4\": \"3,4,4,4\"\n" +
+                "    }\n" +
+                "}";
+            break;
+        case 1: //
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+    }
 
     ws.send(shipData)
 }
 
-function convertToJson() {
-
+function sendShot(x, y) {
+    ws.send("{\"Shot\": \"" + x + "," + y + "\"}")
 }
+
 
 // Check the Win Screen/Lose Screen
 function togglePopup() {
@@ -183,10 +223,18 @@ function generateTable() {
             let cell = document.createElement('td');
             let button = document.createElement('button');
             // button.textContent = 'Button ' + ((i * numCols) + j + 1);
-            button.textContent = 'O';
-            button.id = 'Button[' + (i) + ',' + j + ']';
+
+            button.textContent = 'X';
+            button.id = 'Button[' + j + ',' + i + ']';
             button.className = 'gamebuttons';
-            // button.onclick(generateSubmit(button.id));
+
+            //add event listener to send shots to the server
+            button.addEventListener('click', function() {
+                sendShot(j, i)
+                let id = 'Button[' + j + ',' + i + ']';
+                document.getElementById(id).style.background = "white";
+            });
+
             cell.appendChild(button);
             row.appendChild(cell);
         }
