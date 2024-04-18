@@ -1,9 +1,48 @@
-function joinPlayerOne() {
-    generateTable();
+let ws; //websocket
+
+//------------------------ Begin Game, State 0 ----------------------------------------------------
+function playerJoin() {
+    //disable button
+    document.getElementById("playeronebutton").hidden = true;
+    document.getElementById("playertwobutton").hidden = true;
+
+    // create the web socket
+    ws = new WebSocket("ws://localhost:8080/Battle-Ship-1.0-SNAPSHOT/ws");
+
+//----------------------------- Main Game Logic ---------------------------------------------------
+    ws.onmessage = function (event) {
+        let message = JSON.parse(event.data);
+        console.log(event.data);
+        switch (message.type) {
+            case "Ready": //received when server is now waiting for ship data
+                //move to position ships
+                //TODO be able to place ships
+
+
+                break;
+
+            default: //just log the message, never called
+                console.log("type: " + message.type + ", msg: " + message.message);
+
+        }
+    }
 }
 
-function joinPlayerTwo() {
-    generateTable();
+function sendShipData() {
+    let shipData = "{\"ship\": \n" +
+        "    {\n" +
+        "    \"0\": \"9,0,9,4\",\n" +
+        "    \"1\": \"0,0,3,0\",\n" +
+        "    \"2\": \"0,9,2,9\",\n" +
+        "    \"3\": \"9,7,9,9\",\n" +
+        "    \"4\": \"3,4,4,4\"\n" +
+        "    }\n" +
+        "}";
+
+    ws.send(shipData)
+}
+
+function convertToJson() {
 
 }
 
@@ -124,6 +163,8 @@ function frame(params) {
 //Credit to https://mr-easy.github.io/2017-06-26-creating-spritesheet-animation-in-html5-canvas-using-javascript/
 
 //  -------------- END -------------- SPRITE FUNCTION -------------- END --------------  
+
+
 
 // STOLEN
 function generateTable() {
