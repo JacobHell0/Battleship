@@ -103,26 +103,30 @@ public class BattleShip {
         //determine if the shot hit a ship
         if(whoShot) {
             //P2 ships are checked, because P1 shot the shell
-            if(this.ship2.checkHit(shotData)) {
+            if(ship2.checkHit(shotData)) {
                 sendMessageToClient(session, "ShotResponse", shotData);
                 winCounters[0]++;
             } else {
                 sendMessageToClient(session, "ShotResponse", "Miss");
+                sendMessageToClient(playerSessions[1], "YourTurn", "P2Turn"); //send player 2s turn
+                state = 3;
             }
         } else {
             //P1 ships are checked
-            if(this.ship1.checkHit(shotData)) {
+            if(ship1.checkHit(shotData)) {
                 sendMessageToClient(session, "ShotResponse", shotData);
                 winCounters[1]++;
             } else {
                 sendMessageToClient(session, "ShotResponse", "Miss");
+                sendMessageToClient(playerSessions[0], "YourTurn", "P1Turn");
+                state = 2;
             }
         }
-        if(winCounters[0] == 16) { //player 1 has won the game because 16 ships were sunk
+        if(winCounters[0] == 17) { //player 1 has won the game because 16 ships were sunk
             sendMessageToClient(playerSessions[0], "Win", "P1HasWon");
             sendMessageToClient(playerSessions[1], "Lose", "P2HasLost");
             terminateWebsocket();
-        } else if (winCounters[1] == 16) { //player 2 has won the game
+        } else if (winCounters[1] == 17) { //player 2 has won the game
             sendMessageToClient(playerSessions[1], "Win", "P2HasWon");
             sendMessageToClient(playerSessions[0], "Lose", "P1HasLost");
             terminateWebsocket();
@@ -133,12 +137,12 @@ public class BattleShip {
         //determine if player 1 or 2 sent the data
         if(session.getId().equals(players[0])) {
             //player 1 sent shipdata
-            this.ship1 = new ShipPositions(shipData);
+            ship1 = new ShipPositions(shipData);
         } else if (session.getId().equals(players[1])) {
-            this.ship2 = new ShipPositions(shipData);
+            ship2 = new ShipPositions(shipData);
         }
         //check if we have both data
-        if(this.ship1 != null && this.ship2 != null) {
+        if(ship1 != null && ship2 != null) {
             //send on ready message to both clients
             //randomize who goes first
             Random rand = new Random();
