@@ -16,8 +16,7 @@ function playerJoin() {
         console.log(event.data);
         switch (message.type) {
             case "Ready": //received when server is now waiting for ship data
-                //move to position ships
-                //TODO be able to place ships
+                togglePopup3();
                 break;
 
             case "StartGameFirst":
@@ -73,7 +72,7 @@ function changeButtonColour(shotData) {
 function sendShipData(template) {
 
     let shipData;
-    //template ranges from 0-5, corresponding to the layouts
+    //template ranges from 0-6, corresponding to the layouts
 
     switch (template) {
         case 0: //4 corners
@@ -91,8 +90,8 @@ function sendShipData(template) {
             shipData = "{\"ship\": \n" +
                 "    {\n" +
                 "    \"0\": \"0,0,0,4\",\n" +
-                "    \"1\": \"0,9,0,6\",\n" +
-                "    \"2\": \"9,7,9,5\",\n" +
+                "    \"1\": \"0,6,0,9\",\n" +
+                "    \"2\": \"9,5,9,7\",\n" +
                 "    \"3\": \"5,9,7,9\",\n" +
                 "    \"4\": \"3,4,4,4\"\n" +
                 "    }\n" +
@@ -145,11 +144,11 @@ function sendShipData(template) {
         case 6: //radio frequency
             shipData = "{\"ship\": \n" +
                 "    {\n" +
-                "    \"0\": \"3,9,3,5\",\n" +
-                "    \"1\": \"7,9,7,6\",\n" +
+                "    \"0\": \"3,5,3,9\",\n" +
+                "    \"1\": \"7,6,7,9\",\n" +
                 "    \"2\": \"5,9,5,7\",\n" +
-                "    \"3\": \"9,9,9,7\",\n" +
-                "    \"4\": \"1,9,1,8\"\n" +
+                "    \"3\": \"9,7,9,9\",\n" +
+                "    \"4\": \"1,8,1,9\"\n" +
                 "    }\n" +
                 "}";
             break;
@@ -181,119 +180,10 @@ function togglePopup3() {
     document.getElementById("popup-3").classList.toggle("active");
 }
 
-function battlePlanSelector() {
-    console.log("This is working");
+function battlePlanSelector(index) {
+    sendShipData(index);
+    togglePopup3();
 }
-
-//  -------------- BEGIN -------------- SPRITE FUNCTION -------------- BEGIN --------------  
-
-const canvas = document.getElementById("myCanvas");
-const context = canvas.getContext("2d");
-const width = canvas.width = 512;
-const height = canvas.height = 512;
-
-const frameWidth = 64;
-const frameHeight = 100;
-const xPos = 130;
-const yPos = 160;
-
-
-function animate(params) {
-
-}
-
-function frame(params) {
-    context.clearRect(0, 0, width, height);
-    animate();
-    requestAnimationFrame(frame);
-}
-// let canvas, context;
-// let hero;
-// let heroSpritesheet = new Image();
-// // heroSpritesheet.src = "AircraftCarrierIMG.png";   //provide the path to the image
-
-// heroSpritesheet.src = "heroSpritesheet.png";
-
-// window.onload = function () {
-//     canvas = document.getElementById("myCanvas");
-//     context = canvas.getContext("2d");
-
-
-//     //TODO: create the hero GameObject 
-//     hero = new GameObject(heroSpritesheet, 0, 0, 536, 256, 90, 6);
-
-//     // call the game loop
-//     loop();
-// }
-
-// //The Game Loop
-// function loop() {
-//     update();
-//     draw();
-//     //https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
-//     requestAnimationFrame(loop);
-// }
-
-// //update function to update all the GameObjects
-// function update() {
-//     hero.update();
-// }
-
-// //draw method for drawing everything on canvas
-// function draw() {
-//     context.clearRect(0, 0, canvas.width, canvas.height);
-//     hero.draw(context);
-// }
-
-
-// function GameObject(spritesheet, x, y, width, height, timePerFrame, numberOfFrames) {
-//     this.spritesheet = spritesheet;             //the spritesheet image
-//     this.x = x;                                 //the x coordinate of the object
-//     this.y = y;                                 //the y coordinate of the object
-//     this.width = width;                         //width of spritesheet
-//     this.height = height;                       //height of spritesheet
-//     this.timePerFrame = timePerFrame;           //time in(ms) given to each frame
-//     this.numberOfFrames = numberOfFrames || 1;  //number of frames(sprites) in the spritesheet, default 1
-
-//     //current frame index pointer
-//     this.frameIndex = 0;
-
-//     //time the frame index was last updated
-//     this.lastUpdate = Date.now();
-
-//     //to update
-//     this.update = function () {
-//         // TODO: update the frameIndex after the it has elapsed more time than the timePerFrame
-
-//         if (Date.now() - this.lastUpdate >= this.timePerFrame) {
-//             this.frameIndex++;
-//             if (this.frameIndex >= this.numberOfFrames) {
-//                 this.frameIndex = 0;
-//             }
-//             this.lastUpdate = Date.now();
-//         }
-
-//     }
-
-//     //to draw on the canvas, parameter is the context of the canvas to be drawn on
-//     this.draw = function (context) {
-//         //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
-//         context.drawImage(this.spritesheet,                               //The image to be drawn
-//             this.frameIndex * this.width / this.numberOfFrames, //The x coordinate where to start clipping
-//             0,                                              //The y coordinate where to start clipping
-//             this.width / this.numberOfFrames,                 //The width of image to be draw(clipping)
-//             this.height,                                    //The height of image to be draw(clipping)
-//             x,                                              //The x coordinate on the canvas where the image to be drawn
-//             y,                                              //The y coordinate on the canvas where the image to be drawn
-//             this.width / this.numberOfFrames,                 //The width of the image(resizing it)
-//             this.height);                                   //The height of the image(resizing it)
-//     }
-// }
-
-//Credit to https://mr-easy.github.io/2017-06-26-creating-spritesheet-animation-in-html5-canvas-using-javascript/
-
-//  -------------- END -------------- SPRITE FUNCTION -------------- END --------------  
-
 
 
 // STOLEN
@@ -336,26 +226,8 @@ function generateTable() {
     divHolder.appendChild(table)
     container.appendChild(divHolder);
 
-    // generateSubmit();
+
 }
 
-// function generateSubmit()
-// {
-//     let submit = document.createElement('button');
-//
-// }
 
-// function tag(ID)
-// {
-//     button = document.getElementById(ID);
-//
-//     if (button.style.backgroundColor = "grey")
-//     {
-//         button.style.backgroundColor = "red"
-//     }
-//     else
-//     {
-//         button.style.backgroundColor = "grey"
-//     }
-// }
 
