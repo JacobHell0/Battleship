@@ -26,7 +26,7 @@ function generateTable() {
             let cell = document.createElement('td');
             let button = document.createElement('button');
             button.textContent = 'Button ' + ((i * numCols) + j + 1);
-            button.id = 'Button[' + (i * numCols) + ',' + j + ']';
+            button.id = 'Button[' + (i) + ',' + j + ']';
             button.className = 'gamebuttons';
             // button.onclick(generateSubmit(button.id));
             cell.appendChild(button);
