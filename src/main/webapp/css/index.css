@@ -92,13 +92,24 @@ li a:hover:not(.active) {
 
 /*  -------------- BEGIN -------------- POPUP -------------- BEGIN --------------   */
 
-.popup .overlay {
+.popup .overlay1 {
     position: fixed;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 200, 0, 0.7);
+    z-index: 1;
+    display: none;
+}
+
+.popup .overlay2 {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(200, 0, 0, 0.7);
     z-index: 1;
     display: none;
 }
@@ -108,13 +119,29 @@ li a:hover:not(.active) {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background-color: #fff;
+    color: white;
+    background-color: black;
     width: 450px;
     height: 220px;
     z-index: 2;
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
+}
+
+.popup .popupHeadingW {
+
+    color: green;
+}
+
+.popup .popupHeadingL {
+
+    color: red;
+}
+
+.popup .popupHeading {
+    /* width: 100%; */
+    /* background-color: orange; */
 }
 
 .popup .closeBtn {
@@ -132,7 +159,11 @@ li a:hover:not(.active) {
     border-radius: 50%;
 }
 
-.popup.active .overlay {
+.popup.active .overlay1 {
+    display: block;
+}
+
+.popup.active .overlay2 {
     display: block;
 }
 
