@@ -104,7 +104,7 @@ public class BattleShip {
         if(whoShot) {
             //P2 ships are checked, because P1 shot the shell
             if(this.ship2.checkHit(shotData)) {
-                sendMessageToClient(session, "ShotResponse", "Hit");
+                sendMessageToClient(session, "ShotResponse", shotData);
                 winCounters[0]++;
             } else {
                 sendMessageToClient(session, "ShotResponse", "Miss");
@@ -112,7 +112,7 @@ public class BattleShip {
         } else {
             //P1 ships are checked
             if(this.ship1.checkHit(shotData)) {
-                sendMessageToClient(session, "ShotResponse", "Hit");
+                sendMessageToClient(session, "ShotResponse", shotData);
                 winCounters[1]++;
             } else {
                 sendMessageToClient(session, "ShotResponse", "Miss");
