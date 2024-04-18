@@ -142,7 +142,7 @@ function generateTable() {
             let cell = document.createElement('td');
             let button = document.createElement('button');
             // button.textContent = 'Button ' + ((i * numCols) + j + 1);
-            button.textContent = 'X';
+            button.textContent = 'O';
             button.id = 'Button[' + (i) + ',' + j + ']';
             button.className = 'gamebuttons';
             // button.onclick(generateSubmit(button.id));
