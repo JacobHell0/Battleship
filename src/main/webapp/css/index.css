@@ -172,6 +172,95 @@ li a:hover:not(.active) {
     transform: translate(-50%, -50%) scale(1);
 }
 
+
+
+.popupBP .overlay2 {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 1;
+    display: none;
+}
+
+.popupBP .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: white;
+    background: black;
+    /* width: 850px;
+    height: 880px; */
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.popupBP .closeBtn {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.popupBP.active .overlay2 {
+    display: block;
+}
+
+.popupBP.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.Container1 {
+    margin-top: 100px;
+}
+
+.Row {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 50px;
+}
+
+.battlePLANIMG {
+    width: 300px;
+    height: 300px;
+}
+
+.card1 {
+    cursor: pointer;
+    border: 5px solid green;
+    padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.card1:hover {
+    border-color: red;
+}
+
+.popup h2 {
+    font-size: 40px;
+}
+
+.popupBP h2 {
+    font-size: 80px;
+}
+
 /*  -------------- END -------------- POPUP -------------- END --------------   */
 
 

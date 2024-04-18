@@ -53,6 +53,7 @@
 
    <button onclick="togglePopup()">Show Win Popup</button>
 
+
    <div class="popup" id="popup-2">
     <div class="overlay2"></div>
     <div class="content">
@@ -63,6 +64,67 @@
    </div>
 
    <button onclick="togglePopup2()">Show Lose Popup</button>
+
+
+   <div class="popupBP" id="popup-3">
+    <div class="overlay2"></div>
+    <div class="content">
+
+      <div class="closeBtn" onclick="togglePopup3()">&times;</div>
+      <div class="popupHeadingW"><h2>BATTLEPLAN</h2></div>
+      <div><h3>Get Ready Sailor the Battle is about to start. Choose you Battleplan</h3></div>
+      <div class="Container1">
+
+        <div class="Row">
+          <div class="card1">
+            <h3>THE ADMIRAL1</h3 onclick="battlePlanSelector()" id="1">
+            <img class="battlePLANIMG" src="img/image-2.png" alt="">
+          </div>
+  
+          <div class="card1" onclick="battlePlanSelector()" id="2">
+            <h3>THE CAPTAIN2</h3>
+            <img class="battlePLANIMG" src="img/image-2.png" alt="">
+          </div>
+  
+          <div class="card1" onclick="battlePlanSelector()" id="3">
+            <h3>THE ROOKIE3</h3>
+            <img class="battlePLANIMG" src="img/image-2.png" alt="">
+          </div>
+
+        </div>
+
+        <div class="Row">
+          <div class="card1" onclick="battlePlanSelector()" id="4">
+            <h3>BRUTE FORCE4</h3>
+            <img class="battlePLANIMG" src="img/image-2.png" alt="">
+          </div>
+  
+          <div class="card1" onclick="battlePlanSelector()" id="5">
+            <h3>HOLD THE LINE5</h3>
+            <img class="battlePLANIMG" src="img/image-2.png" alt="">
+          </div>
+  
+          <div class="card1" onclick="battlePlanSelector()" id="6">
+            <h3>SPREAD OUT6</h3>
+            <img class="battlePLANIMG" src="img/image-2.png" alt="">
+          </div>
+        </div>
+
+        <div class="Row">
+
+          <div class="card1" onclick="battlePlanSelector()" id="7">
+            <h3>FLANK7</h3>
+            <img class="battlePLANIMG" src="img/image-2.png" alt="">
+          </div>
+
+        </div>
+        
+      </div>
+  
+    </div>
+   </div>
+
+   <button onclick="togglePopup3()">BattlePlan Popup</button>
 
   </body>
 
