@@ -78,10 +78,15 @@ This message is expected from player one
 
 ### Messages sent to client
 ```json
-{"ShotResponse": "Hit"}
+{"ShotResponse": "x,y"}
 ```
 ```json
 {"ShotResponse": "Miss"}
+```
+
+Sent to Player 2
+```json
+{"YourTurn": "P2Turn"}
 ```
 
 The win packet is sent to P1
@@ -108,10 +113,14 @@ This message is expected from player two
 
 ### Messages sent to client
 ```json
-{"ShotResponse": "Hit"}
+{"ShotResponse": "x,y"}
 ```
 ```json
 {"ShotResponse": "Miss"}
+```
+sent to Player 1
+```json
+{"YourTurn": "P1Turn"}
 ```
 
 The win packet is sent to P2

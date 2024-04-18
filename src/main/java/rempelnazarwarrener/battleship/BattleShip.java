@@ -7,44 +7,42 @@ import jakarta.websocket.server.ServerEndpoint;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 @ServerEndpoint("/ws")
 public class BattleShip {
 
-    private int state;
-    private int currentPlayers;
+    //all these private members are static to simulate having one websocket to control the logic
+
+    private static int state;
+    private static int currentPlayers;
 
     //contains the counters to determine if a player has won
-    private int[] winCounters = new int[2];
+    private static int[] winCounters = new int[2];
 
     //two values to store the ship data
-    private ShipPositions ship1;
-    private ShipPositions ship2;
+    private static ShipPositions ship1;
+    private static ShipPositions ship2;
 
     //array to store the session data corresponding to P1 and P2
-    private String[] players = new String[2];
-    private Session[] playerSessions = new Session[2];
+    private static String[] players = new String[2];
+    private static Session[] playerSessions = new Session[2];
 
     public BattleShip() {}
     @OnOpen
     public void open(Session session) throws IOException {
-        this.state = 0;
-        if(this.currentPlayers == 0) {
+        if(currentPlayers == 0) {
             currentPlayers++;
-            this.players[0] = session.getId();
-            this.playerSessions[0] = session;
-        } else if (this.currentPlayers == 1) {
+            players[0] = session.getId();
+            playerSessions[0] = session;
+        } else if (currentPlayers == 1) {
             currentPlayers++;
-            this.state = 1;
-            this.players[1] = session.getId();
-            this.playerSessions[1] = session;
+            state = 1;
+            players[1] = session.getId();
+            playerSessions[1] = session;
             //send ready to both players
-            sendMessageToClient(this.playerSessions[0], "Ready", "Ready");
-            sendMessageToClient(this.playerSessions[1], "Ready", "Ready");
+            sendMessageToClient(playerSessions[0], "Ready", "Ready");
+            sendMessageToClient(playerSessions[1], "Ready", "Ready");
         } else {
             session.close();
         }
@@ -59,7 +57,7 @@ public class BattleShip {
         String type = (String) jsonmsg.get("type");
 
         //which state is the server in?
-        switch(this.state) {
+        switch(state) {
             case 0:         //waiting for other player and a msg got sent
                 return;
             case 1:         //Players are placing ships
@@ -68,12 +66,12 @@ public class BattleShip {
                 }
                 break;
             case 2:         //It is Player 1's turn to shoot
-                if(type.equals("Shot") && this.players[0].equals(session.getId())) {
+                if(type.equals("Shot") && players[0].equals(session.getId())) {
                     handleShot(session, message);
                 }
                 break;
             case 3:         //It is player 2's turn to shoot
-                if(type.equals("Shot") && this.players[1].equals(session.getId())){
+                if(type.equals("Shot") && players[1].equals(session.getId())){
                     handleShot(session, message);
                 }
                 break;
@@ -85,8 +83,8 @@ public class BattleShip {
     }
 
     public void terminateWebsocket() throws IOException {
-        this.playerSessions[0].close();
-        this.playerSessions[1].close();
+        playerSessions[0].close();
+        playerSessions[1].close();
     }
 
     public void handleShot(Session session, String shotData) throws IOException {
@@ -94,7 +92,7 @@ public class BattleShip {
         //determine which player shot the bullet
 
         boolean whoShot;
-        if(this.players[0].equals(session.getId())) {
+        if(players[0].equals(session.getId())) {
             //player 1 shot the shell
             whoShot = true;
         } else {
@@ -105,42 +103,46 @@ public class BattleShip {
         //determine if the shot hit a ship
         if(whoShot) {
             //P2 ships are checked, because P1 shot the shell
-            if(this.ship2.checkHit(shotData)) {
-                sendMessageToClient(session, "ShotResponse", "Hit");
+            if(ship2.checkHit(shotData)) {
+                sendMessageToClient(session, "ShotResponse", shotData);
                 winCounters[0]++;
             } else {
                 sendMessageToClient(session, "ShotResponse", "Miss");
+                sendMessageToClient(playerSessions[1], "YourTurn", "P2Turn"); //send player 2s turn
+                state = 3;
             }
         } else {
             //P1 ships are checked
-            if(this.ship1.checkHit(shotData)) {
-                sendMessageToClient(session, "ShotResponse", "Hit");
+            if(ship1.checkHit(shotData)) {
+                sendMessageToClient(session, "ShotResponse", shotData);
                 winCounters[1]++;
             } else {
                 sendMessageToClient(session, "ShotResponse", "Miss");
+                sendMessageToClient(playerSessions[0], "YourTurn", "P1Turn");
+                state = 2;
             }
         }
-        if(winCounters[0] == 16) { //player 1 has won the game because 16 ships were sunk
-            sendMessageToClient(this.playerSessions[0], "Win", "P1HasWon");
-            sendMessageToClient(this.playerSessions[1], "Lose", "P2HasLost");
+        if(winCounters[0] == 17) { //player 1 has won the game because 16 ships were sunk
+            sendMessageToClient(playerSessions[0], "Win", "P1HasWon");
+            sendMessageToClient(playerSessions[1], "Lose", "P2HasLost");
             terminateWebsocket();
-        } else if (winCounters[1] == 16) { //player 2 has won the game
-            sendMessageToClient(this.playerSessions[1], "Win", "P2HasWon");
-            sendMessageToClient(this.playerSessions[0], "Lose", "P1HasLost");
+        } else if (winCounters[1] == 17) { //player 2 has won the game
+            sendMessageToClient(playerSessions[1], "Win", "P2HasWon");
+            sendMessageToClient(playerSessions[0], "Lose", "P1HasLost");
             terminateWebsocket();
         }
     }
 
     public void placingShips(Session session, String shipData) throws IOException {
         //determine if player 1 or 2 sent the data
-        if(session.getId().equals(this.players[0])) {
+        if(session.getId().equals(players[0])) {
             //player 1 sent shipdata
-            this.ship1 = new ShipPositions(shipData);
-        } else if (session.getId().equals(this.players[1])) {
-            this.ship2 = new ShipPositions(shipData);
+            ship1 = new ShipPositions(shipData);
+        } else if (session.getId().equals(players[1])) {
+            ship2 = new ShipPositions(shipData);
         }
         //check if we have both data
-        if(this.ship1 != null && this.ship2 != null) {
+        if(ship1 != null && ship2 != null) {
             //send on ready message to both clients
             //randomize who goes first
             Random rand = new Random();
