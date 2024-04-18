@@ -1,4 +1,5 @@
 let ws; //websocket
+let isMyTurn;
 
 //------------------------ Begin Game, State 0 ----------------------------------------------------
 function playerJoin() {
@@ -17,20 +18,34 @@ function playerJoin() {
             case "Ready": //received when server is now waiting for ship data
                 //move to position ships
                 //TODO be able to place ships
-
                 break;
+
             case "StartGameFirst":
                 generateTable();
+                isMyTurn = 1;
                 break;
 
             case "StartGameSecond":
+                isMyTurn = 0;
                 generateTable();
                 break;
 
             case "ShotResponse":
-                changeButtonColour(message.data);
+                console.log("data:")
+                console.log(message)
+                changeButtonColour(message.message);
                 break;
 
+            case "YourTurn":
+                isMyTurn = 1;
+                break;
+
+            case "Win":
+                togglePopup()
+                break;
+            case "Lose":
+                togglePopup2()
+                break;
 
             default: //just log the message, never called
                 console.log("type: " + message.type + ", msg: " + message.message);
@@ -41,12 +56,17 @@ function playerJoin() {
 
 function changeButtonColour(shotData) {
 
-    if(!shotData.equals("Miss")) {
+    console.log("changing colour: " + shotData);
+
+    if(!(shotData === "Miss")) {
         let split = shotData.split(",");
         let x = split[0];
         let y = split[1];
         let id = 'Button[' + x + ',' + y + ']';
         document.getElementById(id).style.background = "red";
+        isMyTurn = 1;
+    } else {
+        isMyTurn = 0;
     }
 }
 
@@ -54,6 +74,7 @@ function sendShipData(template) {
 
     let shipData;
     //template ranges from 0-5, corresponding to the layouts
+
     switch (template) {
         case 0: //4 corners
             shipData = "{\"ship\": \n" +
@@ -133,12 +154,17 @@ function sendShipData(template) {
                 "}";
             break;
     }
-
-    ws.send(shipData)
+    let request = { "type": "ShipData", "msg": shipData };
+    console.log("sending ship data: " + request);
+    ws.send(JSON.stringify(request));
 }
 
 function sendShot(x, y) {
-    ws.send("{\"Shot\": \"" + x + "," + y + "\"}")
+    let request = { "type": "Shot", "msg": x + "," + y };
+    console.log("firing shot at: " + x + "," + y);
+
+    // ws.send("{\"Shot\": \"" + x + "," + y + "\"}")
+    ws.send(JSON.stringify(request));
 }
 
 
@@ -286,9 +312,11 @@ function generateTable() {
 
             //add event listener to send shots to the server
             button.addEventListener('click', function() {
-                sendShot(j, i)
-                let id = 'Button[' + j + ',' + i + ']';
-                document.getElementById(id).style.background = "white";
+                if(isMyTurn) {
+                    sendShot(j, i)
+                    let id = 'Button[' + j + ',' + i + ']';
+                    document.getElementById(id).style.background = "white";
+                }
             });
 
             cell.appendChild(button);
