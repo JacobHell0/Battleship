@@ -21,6 +21,7 @@ function playerJoin() {
 
             case "StartGameFirst":
                 generateTable();
+                toggleYourTurnPopUp();
                 isMyTurn = 1;
                 break;
 
@@ -89,7 +90,7 @@ function sendShipData(template) {
         case 1: //four corners v2
             shipData = "{\"ship\": \n" +
                 "    {\n" +
-                "    \"0\": \"0,0,0,4\",\n" +
+                "    \"0\": \"0,0,4,0\",\n" +
                 "    \"1\": \"0,6,0,9\",\n" +
                 "    \"2\": \"9,5,9,7\",\n" +
                 "    \"3\": \"5,9,7,9\",\n" +
@@ -170,6 +171,10 @@ function sendShot(x, y) {
 // Check the Win Screen/Lose Screen
 function togglePopup() {
     document.getElementById("popup-1").classList.toggle("active");
+}
+
+function toggleYourTurnPopUp() {
+    document.getElementById("popup-yourturn").classList.toggle("active");
 }
 
 function togglePopup2() {
