@@ -12,7 +12,7 @@ ships. The gameboard will display whether the user has hit its opponent ship (tu
 it has missed (turning the box white). The user/client interacts with a beautifully displayed UI that follows a
 military theme allowing the user to immerse in a warfare/battlefield experience. 
 
-[INSERT SCREENSHOT] --- I provided a screen shot in the img file ---
+[INSERT SCREENSHOT] --- I provided a screen shot in the img file ----
 
 
 2. ---------- HOW TO RUN --------------
