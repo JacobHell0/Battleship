@@ -2,7 +2,10 @@
 Software Systems Development and Integration
 CSCI2020U - Winter 2024
 
-# 1. ------- PROJECT INFORMATION --------
+## Demo
+[Demo of the project in action](https://youtu.be/47hfJIEKNfk)
+
+# ------- PROJECT INFORMATION --------
 
 Group Members: Jacob Rempel, Ryan Warrener, Bilal Nazar
 
@@ -16,7 +19,17 @@ military theme allowing the user to immerse in a warfare/battlefield experience.
 ![INSERT SCREENSHOT](src/main/webapp/img/Screenshot1.png)
 
 
-# 2. ---------- HOW TO RUN --------------
+# My Favourite Contribution
+I wrote the entire backend to be robust and also engineered to prevent cheating, if you're interested in reading about that, see below.
+
+## Backend Notes
+If you're interested in how our backend works, [here is a markdown document](src/main/EndPoints.md) detailing how it 
+functions and how it interacts with the front end. One of the coolest things it was designed todo was to only accept
+packets it is supposed to receive. So if the client tries to send 7 fire packets, it will only process 1 of them, and
+maybe another depending on if that one hit or not. This way it is very difficult to cheat by manipulating the websocket.
+
+
+# ---------- HOW TO RUN --------------
 
 ### Step 1)
 Open the GitHub of the assignment and copy the link of the assignment code.
@@ -60,33 +73,20 @@ appear displaying who has won and who lost the game.
 There will be a Navigation Bar on the screen, allowing the user to navigate to either the "Home" Page or the
 "About" page.
 
-# 3. ---------- OTHER RESOURCES ----------
+# ---------- OTHER RESOURCES ----------
 
 Resources that were used to assist with the solution were from the StackOverflow forums that assisted 
 with troubleshooting the backend and frontend of the websites. The use of Lab Codes and In-Class codes were
 used to help develop aspects of the backend. The use of MDN Web Docs and w3Schools was used to help with 
 the creation of the Front-End. The website Freepik.com was used for battleship images within the battleplans.
 
-# 4. -------- CONTRIBUTION REPORT --------
+# -------- CONTRIBUTION REPORT --------
 
 | Name          | Area Worked On | Contribution Percentage |
 |---------------|----------------|-------------------------|
 | Jacob Rempel  | Back-End       | 1/3                     |
 | Bilal Nazar   | Front-End      | 1/3                     |
 | Ryan Warrener | Front-End      | 1/3                     |
-
-# 5. -------- Other Items and Extra Information --------
-
-## Demo
-[Demo of the project in action](https://youtu.be/47hfJIEKNfk)
-
-## Backend Notes
-If you're interested in how our backend works, [here is a markdown document](src/main/EndPoints.md) detailing how it 
-functions and how it interacts with the front end. One of the coolest things it was designed todo was to only accept
-packets it is supposed to receive. So if the client tries to send 7 fire packets, it will only process 1 of them, and
-maybe another depending on if that one hit or not. This way it is very difficult to cheat by manipulating the websocket.
-
-
 
 ## A Note On Commits
 A lot of the commits were done by Jacob, however a lot of the time (like writing this file) Ryan and Bilal helped
